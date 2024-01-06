@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --text-primary: #000000;
+    --text-secondary: #000000c4;
+    --text-tertiary: #0000007a;
+    --text-accent: #1900f8;
+    --text-white: #ffffff;
+
+    --border-radius-small: 0.05rem;
+    --border-radius-medium: 0.25rem;
+    --border-radius-large: 1rem;
+
+    --color-primary:#1900f8;
+    --color-primary-emphasis:#1400c4;
+    --color-secondary:#f800f8;
+    --color-secondary-emphasis:#a700a7;
+    --color-neutral:#e7e7e7;
+    --color-neutral-emphasis:#b9b9b9;
+    --color-success:#5da374;
+    --color-success-emphasis:#36744a;
+    --color-error:#c43535;
+    --color-error-emphasis:#8f1d1d;
+}
+
+p,span,h1,h2,h3,h4,h5,h6,a,button{
+    font-family: "Urbanist";
+}
+
+/* Text */
+.text-small {
+    font-size: 0.75rem;
+    line-height: 1.05rem;
+}
+
+.text-medium {
+    font-size: 1rem;
+    line-height: 1.4rem;
+}
+
+.text-large {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.text-header-large {
+    font-size: 4rem;
+    line-height: 4.8rem;
+}
+
+.text-header-medium {
+    font-size: 3rem;
+    line-height: 3.6rem;
+}
+
+.text-header-small {
+    font-size: 2rem;
+    line-height: 2.4rem;
+}
+
+.text-accent{
+    color: var(--text-accent);
+}
+
+.text-primary{
+    color: var(--text-primary);
+}
+
+.text-secondary{
+    color: var(--text-secondary);
+}
+
+.text-tertiary{
+    color: var(--text-tertiary);
+}
