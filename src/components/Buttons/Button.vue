@@ -1,11 +1,11 @@
 <template>
     <button 
     :class="computedClasses"
-    @click="$emit('click')"
+    @click="onClick"
     :disabled="disabled"
     >
     <i v-if="icon != ''" class="pr-1" :class="icon"></i>
-    <slot></slot>
+    <slot name="button-content">Button text</slot>
 </button>
 </template>
 
@@ -55,6 +55,9 @@ export default {
                         variantClasses += "btn-neutral-fill";
                     }
                     break;
+                case "link":
+                    variantClasses = "btn-link";
+                    break;
                     
                 default:
                     variantClasses = "btn-neutral-fill";
@@ -62,6 +65,11 @@ export default {
             
             let disabledClasses = this.disabled ? "btn-disabled" : "";
             return `${baseClasses} ${variantClasses} ${blockClasses} ${disabledClasses}`;
+        }
+    },
+    methods:{
+        onClick(){
+            this.$emit("click");
         }
     }
 };

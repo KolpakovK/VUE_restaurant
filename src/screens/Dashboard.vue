@@ -9,43 +9,31 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-4">
-            <p>Message is: {{ message }}</p>
-            <div class="flex flex-col">
-                
-                <LabelVue target="test" required="true">Test</LabelVue>
-                <InputVue id="test" type="text" rightIcon="ri-cloud-fill" prefix="https://" placeholder="Enter text" @update="value => message = value" />
-                <MessageVue>Test message</MessageVue>
-                    
-                </div>
-                
-                <div class="flex flex-col">
-                    
-                    <LabelVue target="test1" required="true">Test</LabelVue>
-                    <InputVue error="true" id="test1" type="text" rightIcon="ri-cloud-fill" prefix="https://" placeholder="Enter text"/>
-                    <MessageVue error="true">Test message</MessageVue>
-                        
-                    </div>
-                </div>
-            </div>
-        </template>
+
+            <FieldVue expression="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" errorMessage="Please, enter a valid email" labelText="Please enter your email" type="email"></FieldVue>
+
+            <FieldVue required="true" labelText="Your name"></FieldVue>
+
+            <FieldVue expression="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" type="password" defaultMessage="Password should contain a capital letter and numbers" labelText="Enter your password"></FieldVue>
+            
+        </div>
         
-        <script>
-        import ButtonVue from '@/components/Button.vue';
-        import InputVue from '@/components/Inputs/Input.vue';
-        import LabelVue from '@/components/Inputs/Label.vue';
-        import MessageVue from '@/components/Inputs/Message.vue';
-        
-        export default{
-            components: {
-                ButtonVue,
-                InputVue,
-                LabelVue,
-                MessageVue
-            },
-            data: function(){
-                return {
-                    message: "",
-                }
-            }
+    </div>
+</template>
+
+<script>
+import ButtonVue from '@/components/Buttons/Button.vue';
+import FieldVue from '@/components/Inputs/Field.vue';
+
+export default{
+    components: {
+        ButtonVue,
+        FieldVue
+    },
+    data: function(){
+        return {
+            message: "",
         }
-    </script>
+    }
+}
+</script>

@@ -1,28 +1,28 @@
 <template>
-    <div class="relative">
+    <div class="field" :class="validationInput">
         
-        <!-- Left Icon -->
-        <i v-if="leftIcon != ''" class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-900" :class="leftIcon"></i>
+        <!-- Content before -->
+        <span class="field-content-span">
+            <slot name="contentBefore"></slot>
+        </span>
         
-        <!-- Prefix -->
-        <div v-if="prefix" :class="prefixClasses">
-            {{ prefix }}
-        </div>
-        
-        <!-- Input field -->
+        <!-- Input -->
         <input
-        :id="id"
         v-model="value"
-        :name="id"
+        @input="onChange"
+        class="grow focus:outline-none"
         :type="type"
         :placeholder="placeholder"
-        @input="fieldInput"
-        :class="computedClasses"
+        :disabled="disabled"
         :required="required"
+        :name="name"
+        :id="name"
         />
         
-        <!-- Right Icon with click action  -->
-        <i v-if="rightIcon != ''" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-gray-900" :class="rightIcon" @click="handleRightIconClick"></i>
+        <!-- Content after -->
+        <span class="field-content-span">
+            <slot name="contentAfter"></slot>
+        </span>
     </div>
 </template>
 
@@ -30,82 +30,69 @@
 export default {
     data: function () {
         return {
-            value: this.propValue,
+            value: this.defaultValue,
+            validationResult: true
         }
     },
     props: {
-        propValue: {
+        defaultValue: {
             type: String,
             default: ""
         },
-        id:{
+        type:{
+            type: String,
+            default: "text"
+        },
+        placeholder:{
+            type: String,
+            default: "Placeholder"
+        },
+        disabled:{
+            type: Boolean,
+            default: false
+        },
+        required:{
+            type: Boolean,
+            default: false
+        },
+        name:{
             type: String,
             default: ""
         },
-        type: {
+        expression:{
             type: String,
-            default: "text"
-        },
-        error:{
-            type: Boolean,
-            default: false
-        },
-        placeholder: {
-            type: String,
-            default: "text"
-        },
-        prefix: {
-            type: String,
-            default: ''
-        },
-        leftIcon: {
-            type: String,
-            default: ''
-        },
-        rightIcon: {
-            type: String,
-            default: ''
-        },
-        required: {
-            type: Boolean,
-            default: false
+            default: ""
         }
     },
     methods: {
-        handleRightIconClick() {
-            this.$emit('right-icon-click');
-        },
-        fieldInput($event){
-            this.$emit('update', this.value)
+        onChange($event){
+            if (this.expression){
+                let validation = new RegExp(this.expression).test(this.value);
+
+                if (validation){
+                    this.validationResult=true;
+                }
+                else{
+                    this.validationResult=false;
+                }
+            }
+            this.$emit('onChange', this.value)
         }
     },
     computed: {
-        computedClasses() {
-            let baseClasses = "w-full field";
-            
-            let leftPadding = "pl-3.5";
-            if (this.leftIcon!='' && this.prefix!=''){
-                leftPadding = "pl-20";
-            }
-            else if (this.leftIcon!=''){
-                leftPadding = "pl-8";
-            }
-            else if (this.prefix!=''){
-                leftPadding = "pl-16";
-            }
-            
-            let rightPadding = this.rightIcon!='' ? "pr-8" : "pr-3.5";
-            
-            let errorClasses = this.error ? 'field-error' : '';
+        validationInput(){
+            let baseStyle = "";
 
-            return `${baseClasses} ${leftPadding} ${rightPadding} ${errorClasses}`;
-        },
-        prefixClasses() {
-            let baseClasses = "text-base absolute inset-y-0 left-0 flex items-center pl-3 w-12 text-gray-900";
-            
-            let leftPadding = this.leftIcon!='' ? "pl-8" : "pl-3";
-            
-            return `${baseClasses} ${leftPadding}`;
+            if (this.expression!=""){
+                if (!this.validationResult){
+                    baseStyle = "field-error";
+                }
+                else{
+                    baseStyle = "";
+                }
+            }
+
+            return `${baseStyle}`;
         }
     }
 };
